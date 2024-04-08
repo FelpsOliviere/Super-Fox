@@ -14,6 +14,7 @@ TagManager:
   - Ground
   - Cherry
   - Wall
+  - Fairy
   layers:
   - Default
   - TransparentFX

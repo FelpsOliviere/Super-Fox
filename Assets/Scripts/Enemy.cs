@@ -1,12 +1,5 @@
-using System;
 using System.Collections;
-using System.Collections.Generic;
-using System.Threading;
-using TMPro;
-using Unity.VisualScripting;
-using UnityEditor;
 using UnityEngine;
-using UnityEngine.UIElements.Experimental;
 
 public class Enemy : MonoBehaviour
 {
@@ -204,9 +197,9 @@ public class Enemy : MonoBehaviour
         }
         else
         {
-            transform.Translate(patrolPivot * moveSpeed * Time.deltaTime);
+            transform.Translate(Vector2.up * moveSpeed * Time.deltaTime);
 
-            if (transform.position == patrolPivot)
+            if (transform.position.y > patrolPivot.y)
             {
                 canPounce = true;
             }

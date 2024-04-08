@@ -15,6 +15,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] AudioSource jumpAudioSource;
     [SerializeField] AudioSource hitAudioSource;
     [SerializeField] AudioSource deathAudioSource;
+    [SerializeField] GameObject fairyPos;
 
     Rigidbody2D rb;
     SpriteRenderer spriteRenderer;
@@ -24,7 +25,7 @@ public class PlayerMovement : MonoBehaviour
 
     [SerializeField] int alpha;
 
-    [SerializeField] bool isGrounded;
+    //[SerializeField] bool isGrounded;
     [SerializeField] bool canClimb;
 
 
@@ -78,7 +79,6 @@ public class PlayerMovement : MonoBehaviour
         {
             LevelComplete();
         }
-        Debug.Log(rb.velocity.x + " " + rb.velocity.y);
         IsDead(GameManager.Instance.isDead);
     }
 
@@ -247,7 +247,7 @@ public class PlayerMovement : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Ground"))
         {
-            isGrounded = true;
+            //isGrounded = true;
             canJump = true;
             canCrouch = true;
             isClimbing = false;
@@ -265,23 +265,23 @@ public class PlayerMovement : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Ground"))
         {
-            isGrounded = false;
+            //isGrounded = false;
         }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.CompareTag("Bindweed")/* && !canClimb*/)
+        if (collision.CompareTag("Bindweed")/* && !canClimb*/)
         {
             canClimb = true;
         }
 
-        if (collision.gameObject.CompareTag("Cherry"))
+        if (collision.CompareTag("Cherry"))
         {
             GameManager.Instance.cherrys += collision.GetComponent<Cherry>().cherrys;
         }
 
-        if (collision.gameObject.CompareTag("Enemy"))
+        if (collision.CompareTag("Enemy"))
         {
             if (!GameManager.Instance.gameOver)
             {
@@ -293,7 +293,7 @@ public class PlayerMovement : MonoBehaviour
             GameManager.Instance.isDead = true;
         }
 
-        if (collision.gameObject.CompareTag("OutOfWorld"))
+        if (collision.CompareTag("OutOfWorld"))
         {
             if (!GameManager.Instance.gameOver)
             {
@@ -309,6 +309,13 @@ public class PlayerMovement : MonoBehaviour
             rb.velocity = new Vector2(rb.velocity.x, 14);
             //GameManager.Instance.score += collision.GetComponent<Score>().score;
             hitAudioSource.Play(0);
+        }
+
+        if (collision.CompareTag("Fairy"))
+        {
+            collision.GetComponent<Fairy>().startCount = true;
+            collision.transform.parent = fairyPos.transform;
+            collision.transform.position = fairyPos.transform.position;
         }
     }
 

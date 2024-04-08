@@ -103,6 +103,13 @@ public class MainMenuUI : MonoBehaviour
         levelSelect.SetActive(true);
     }
 
+    public void Link()
+    {
+        string url = "https://felpsoliviere.itch.io/";
+
+        Application.OpenURL(url);
+    }
+
     public void LoadScene(int level)
     {
         GameManager.Instance.levelIndex = level;
